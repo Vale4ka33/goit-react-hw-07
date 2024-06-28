@@ -26,7 +26,7 @@ const ContactList = () => {
         <li key={contactItem.id} className={css.contactItems}>
           <Contact
             name={contactItem.name}
-            number={contactItem.number}
+            number={contactItem.phone}
             id={contactItem.id}
           />
         </li>
