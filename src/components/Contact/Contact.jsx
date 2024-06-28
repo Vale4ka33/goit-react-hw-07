@@ -1,11 +1,14 @@
 import css from "./Contact.module.css";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMdPerson } from "react-icons/io";
-import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contactsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteContact } from "../../redux/contactsOps";
+import { selectError, selectLoading } from "../../redux/contactsSlice";
 
 const Contact = ({ id, name, number }) => {
   const dispatch = useDispatch();
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
 
   const handleDelete = () => {
     dispatch(deleteContact(id));
@@ -23,9 +26,10 @@ const Contact = ({ id, name, number }) => {
           <span>{number}</span>
         </div>
       </div>
-      <button className={css.btn} onClick={handleDelete}>
-        Delete
+      <button className={css.btn} onClick={handleDelete} disabled={loading}>
+        {loading ? "Deleting..." : "Delete"}
       </button>
+      {error && <div className={css.error}>Error: {error}</div>}
     </div>
   );
 };
